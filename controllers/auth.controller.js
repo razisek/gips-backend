@@ -22,7 +22,12 @@ const signup = async (req, res) => {
 };
 
 const signin = async (req, res) => {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({
+        $or: [
+            { username: req.body.username },
+            { email: req.body.username }
+        ]
+    });
 
     if (!user) {
         return res.status(401).send({ message: "username or password is incorrect!" });
