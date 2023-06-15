@@ -9,7 +9,8 @@ const signup = async (req, res) => {
     const user = new User({
         username: req.body.username,
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8)
+        password: bcrypt.hashSync(req.body.password, 8),
+        image: 'default.png'
     });
 
     const saved = await user.save();
