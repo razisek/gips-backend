@@ -1,5 +1,5 @@
 module.exports = {
-    host: "localhost",
-    port: 27017,
-    db: "gips"
+	host: "127.0.0.1",
+	port: 27017,
+	db: "gips",
 };
