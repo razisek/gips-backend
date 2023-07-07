@@ -22,7 +22,6 @@ typealias ConnectedClients = MutableMap<String, DefaultWebSocketServerSession>
 val gameRooms = mutableMapOf<String, GameRoom>()
 var drawingPoint: DrawingPoint? = null
 
-
 fun Routing.drawingWebsocket() {
     post("/create-room") {
         try {
@@ -31,7 +30,8 @@ fun Routing.drawingWebsocket() {
             val theme = call.request.queryParameters["theme"] ?: ""
             val maxPlayers = call.request.queryParameters["maxPlayer"]?.toInt() ?: 25
             val maxRound = call.request.queryParameters["maxRound"]?.toInt() ?: 5
-            val gameRoom = GameRoom(id = id, currentTheme = theme, maxPlayers = maxPlayers, maxRound = maxRound)
+            val duration = call.request.queryParameters["duration"]?.toInt() ?: 60
+            val gameRoom = GameRoom(id = id, currentTheme = theme, maxPlayers = maxPlayers, maxRound = maxRound, duration = duration)
             print("Game Room Created: $gameRoom")
 
             gameRooms[id] = gameRoom
@@ -476,6 +476,7 @@ data class GameRoom(
     var currentRound: Int = 0,
     var maxPlayers: Int = 25,
     var maxRound: Int = 10,
+    var duration: Int = 30,
     val currentTheme: String = "",
     var currentAnswer: String? = "",
     var currentDrawingPoint: MutableList<DrawingPoint>? = mutableListOf(),
